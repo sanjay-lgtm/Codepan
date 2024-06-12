@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import Logo from '../assets/Logo.webp'; // Ensure correct import path and file extension
 import { UserAuthInput } from '../component';
-import { FaEnvelope } from 'react-icons/fa';
+import { FaEnvelope, FaGithub } from 'react-icons/fa';
 import { MdPassword } from 'react-icons/md';
 import { motion } from 'framer-motion';
 import { FcGoogle } from "react-icons/fc";
+import { signInWithGoogle } from '../utils/helper';
 
 const SignUp = () => {
     const [email, setEmail] = useState("")
@@ -41,9 +42,9 @@ const SignUp = () => {
                     ) }
                     {/* text  */ }
                    {!isLogin ?(
-                     <p className='text-sm text-primaryText flex items-center justify-center gap-1'>Already have an account ! <span onClick={() => setIsLogin(!isLogin)} className='text-emerald-500 gap-8'>LogIn here</span></p>
+                     <p className='text-sm text-primaryText flex items-center justify-center gap-1'>Already have an account ! <span onClick={() => setIsLogin(!isLogin)} className='text-emerald-500 gap-8 cursor-pointer'>LogIn here</span></p>
                    ):(
-                    <p className='text-sm text-primaryText flex items-center justify-center gap-1'>Does't have an account ! <span  onClick={() => setIsLogin(!isLogin)}  className='text-emerald-500 gap-8'>Create here</span></p>
+                    <p className='text-sm text-primaryText flex items-center justify-center gap-1'>Does't have an account ! <span  onClick={() => setIsLogin(!isLogin)}  className='text-emerald-500 gap-8 cursor-pointer'>Create here</span></p>
                    )}
                     {/* or  */ }
                    <div className='flex items-center justify-center gap-12'>
@@ -52,8 +53,11 @@ const SignUp = () => {
                    <div className='h-[1px] bg-primaryText rounded-md w-24'></div>
                    </div>
                     {/* google signin  */ }
-                   <motion.div whileTap={{scale:0.9}}>
-                   <FcGoogle />
+                   <motion.div 
+                //    onClick={signInWithGoogle}
+                    className='flex items-center justify-center gap-3 bg-[rgba(256,256,256,0.2)] backdrop-blur-md w-full py-1 rounded-xl hover:bg-[rgba(256,256,256,0.4)] cursor-pointer' whileTap={{scale:0.9}}>
+                   <FcGoogle className='text-3xl' />
+                   <p className='text-xl text-white'>Sign In with Google</p>
 
                    </motion.div>
 
@@ -65,6 +69,12 @@ const SignUp = () => {
                    </div>
 
                     {/* github */ }
+
+                    <motion.div className='flex items-center justify-center gap-3  bg-[rgba(256,256,256,0.2)] backdrop-blur-md w-full py-1 rounded-xl hover:bg-[rgba(256,256,256,0.4)] cursor-pointer' whileTap={{scale:0.9}}>
+                   <FaGithub className='text-3xl' />
+                   <p className='text-xl text-white'>Sign In with GitHub</p>
+
+                   </motion.div>
                 </div>
 
             </div>
