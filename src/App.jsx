@@ -4,7 +4,7 @@ import { setUser, setUserNull } from './context/actions/useractions';
 import { auth, db } from './config/firebase.config';
 import { doc, setDoc } from 'firebase/firestore';
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
-import { Home } from './container';
+import { Home, NewProject } from './container';
 import { Spinner } from './component';
 import './App.css';
 
@@ -20,7 +20,7 @@ function App() {
         setDoc(doc(db, "users", userCred?.uid), userCred?.providerData[0])
           .then(() => {
             dispatch(setUser(userCred?.providerData[0]));
-            navigate("/home/projects",{replace:true})
+            navigate("/home/projects", { replace: true })
           })
           .catch(error => {
             console.error("Error setting user document: ", error);
@@ -39,18 +39,19 @@ function App() {
 
   return (
     <>
-      {isLoading ? (
+      { isLoading ? (
         <div className='w-screen h-screen flex items-center justify-center overflow-hidden'>
           <Spinner />
         </div>
       ) : (
         <div className='w-screen h-screen flex items-start justify-start overflow-hidden'>
           <Routes>
-            <Route path='/home/*' element={<Home />} />
-            <Route path='*' element={<Navigate to="/home" />} />
+            <Route path='/home/*' element={ <Home /> } />
+            <Route path='/newProject' element={ <NewProject /> } />
+            <Route path='*' element={ <Navigate to="/home" /> } />
           </Routes>
         </div>
-      )}
+      ) }
     </>
   );
 }
