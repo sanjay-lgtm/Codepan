@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setUser, setUserNull } from './context/actions/useractions';
+import { setProjects } from './context/actions/projectactions';
 import { auth, db } from './config/firebase.config';
-import { doc, setDoc } from 'firebase/firestore';
+import { collection, doc, onSnapshot, orderBy, query, setDoc } from 'firebase/firestore';
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import { Home, NewProject } from './container';
 import { Spinner } from './component';
@@ -14,44 +15,54 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(userCred => {
+    const unsubscribe = auth.onAuthStateChanged(async (userCred) => {
+      setIsLoading(true);
       if (userCred) {
         console.log(userCred?.providerData[0].email);
-        setDoc(doc(db, "users", userCred?.uid), userCred?.providerData[0])
-          .then(() => {
-            dispatch(setUser(userCred?.providerData[0]));
-            navigate("/home/projects", { replace: true })
-          })
-          .catch(error => {
-            console.error("Error setting user document: ", error);
-          });
+        try {
+          await setDoc(doc(db, "users", userCred?.uid), userCred?.providerData[0]);
+          dispatch(setUser(userCred?.providerData[0]));
+          navigate("/home/projects", { replace: true });
+        } catch (error) {
+          console.error("Error setting user document: ", error);
+        }
       } else {
         dispatch(setUserNull());
         navigate("/home/auth", { replace: true });
       }
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 2000);
+      setIsLoading(false);
     });
 
     return () => unsubscribe();
   }, [navigate, dispatch]);
 
+  useEffect(() => {
+    const projectQuery = query(
+      collection(db, "Projects"),
+      orderBy("id", "desc")
+    );
+    const unsubscribe = onSnapshot(projectQuery, (querySnapshot) => {
+      const projectList = querySnapshot.docs.map((doc) => doc.data());
+      dispatch(setProjects(projectList));
+    });
+    return () => unsubscribe();
+  }, [dispatch]);
+
   return (
     <>
-      { isLoading ? (
+      {isLoading ? (
         <div className='w-screen h-screen flex items-center justify-center overflow-hidden'>
           <Spinner />
         </div>
       ) : (
         <div className='w-screen h-screen flex items-start justify-start overflow-hidden'>
           <Routes>
-            <Route path='/home/*' element={ <Home /> } />
-            <Route path='/newProject' element={ <NewProject /> } />
-            <Route path='*' element={ <Navigate to="/home" /> } />
+            <Route path='/home/*' element={<Home />} />
+            <Route path='/home/newProject' element={<NewProject />} />
+            <Route path='*' element={<Navigate to="/home" />} />
           </Routes>
         </div>
-      ) }
+      )}
     </>
   );
 }

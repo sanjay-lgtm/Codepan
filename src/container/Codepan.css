@@ -1,0 +1,32 @@
+.codepen-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  
+  .split-vertical {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  .split-horizontal {
+    display: flex;
+    height: 100%;
+  }
+  
+  .editor-pane {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    border: 1px solid #ddd;
+    overflow: auto;
+  }
+  
+  .output-pane {
+    height: 100%;
+    border-top: 1px solid #ddd;
+  }
+  
