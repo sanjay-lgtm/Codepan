@@ -25,7 +25,7 @@ const NewProject = () => {
 
   const saveProgram = async () => {
     const id = `${Date.now()}`;
-    const _doc = {
+    const projectDoc = {
       id,
       title,
       html,
@@ -34,12 +34,12 @@ const NewProject = () => {
       user
     };
     try {
-      await setDoc(doc(db, "Projects", id), _doc);
-      setAlertMsg("Project saved....");
+      await setDoc(doc(db, "Projects", id), projectDoc);
+      setAlertMsg("Project saved successfully.");
       setAlert(true);
       setTimeout(() => setAlert(false), 3000);
     } catch (err) {
-      console.log(err);
+      console.error(err);
       setAlertMsg("Error saving project");
       setAlert(true);
       setTimeout(() => setAlert(false), 3000);
@@ -71,11 +71,11 @@ const NewProject = () => {
       <AnimatePresence>
         {alert && <Alert status={"Success"} alertMsg={alertMsg} />}
       </AnimatePresence>
-      <header className='w-full flex items-center justify-between px-32 py-4'>
-        <div className='flex items-center justify-center gap-2'>
+      <header className='w-full flex items-center justify-between px-8 md:px-32 py-4'>
+        <div className='flex items-center gap-2'>
           <img className='w-32 h-auto object-contain' src={Logo} alt='Logo' />
-          <div className='flex flex-col items-start justify-start'>
-            <div className='flex items-center justify-center gap-3'>
+          <div className='flex flex-col items-start'>
+            <div className='flex items-center gap-3'>
               <AnimatePresence>
                 {isTitleEdit ? (
                   <motion.input
@@ -95,7 +95,6 @@ const NewProject = () => {
                   </motion.p>
                 )}
               </AnimatePresence>
-
               <AnimatePresence>
                 {isTitleEdit ? (
                   <motion.div
@@ -118,9 +117,9 @@ const NewProject = () => {
                 )}
               </AnimatePresence>
             </div>
-            <div className='flex items-center justify-center px-3 -mt-2 gap-2'>
+            <div className='flex items-center gap-2 px-3 -mt-2'>
               <p className='text-primaryText text-sm'>
-                {user?.displayName ? user?.displayName : `${user?.email.split("@")[0]}`}
+                {user?.displayName || user?.email.split("@")[0]}
               </p>
               <motion.p whileTap={{ scale: 0.9 }} className='text-[10px] bg-emerald-500 rounded-sm px-2 py-[1px] text-primary font-semibold cursor-pointer '>
                 +Follow
@@ -129,7 +128,7 @@ const NewProject = () => {
           </div>
         </div>
         {user && (
-          <div className='flex items-center justify-center gap-4'>
+          <div className='flex items-center gap-4'>
             <motion.button whileTap={{ scale: 0.9 }} onClick={saveProgram} className='px-6 py-4 bg-primaryText cursor-pointer text-base text-primary font-semibold rounded-md'>Save</motion.button>
             <UserProfileDetails />
           </div>
