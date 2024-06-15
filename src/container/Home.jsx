@@ -6,12 +6,15 @@ import Logo from '../assets/Logo.webp';
 import { MdHome } from "react-icons/md";
 import { FaSearch } from "react-icons/fa";
 import { Project, SignUp } from '../container';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { UserProfileDetails } from '../component';
+import { setSearch } from '../context/actions/searchactions';
 
 const Home = () => {
     const [isSideMenu, setSideMenu] = useState(false);
     const user = useSelector(state => state.user?.user);
+    const searchTerm = useSelector((state) => state.searchTerm?.searchTerm || "");
+    const dispatch = useDispatch();
 
     return (
         <>
@@ -29,7 +32,7 @@ const Home = () => {
                             <p className='text-gray-400 group-hover:text-gray-200 capitalize'>Start Coding</p>
                         </div>
                     </Link>
-                    {!user && (
+                    {user && (
                         <Link to="/home/projects" className='flex items-center justify-center gap-6'>
                             <MdHome className='text-primaryText text-xl' />
                             <p className='text-lg text-primaryText'>Home</p>
@@ -42,7 +45,13 @@ const Home = () => {
                 <div className='w-full flex items-center justify-between gap-3'>
                     <div className='bg-secondary w-full px-4 py-3 rounded-md flex items-center justify-center gap-3'>
                         <FaSearch className='text-2xl text-primaryText' />
-                        <input type='text' className='flex-1 px-4 py-1 text-xl bg-transparent outline-none border-none text-primaryText placeholder:text-gray-600' placeholder='Search here....' />
+                        <input 
+                            type='text' 
+                            value={searchTerm} 
+                            onChange={(e) => dispatch(setSearch(e.target.value))} 
+                            className='flex-1 px-4 py-1 text-xl bg-transparent outline-none border-none text-primaryText placeholder:text-gray-600' 
+                            placeholder='Search here....' 
+                        />
                     </div>
                     {!user ? (
                         <motion.div whileTap={{ scale: 0.9 }} className='flex items-center justify-center gap-3'>
