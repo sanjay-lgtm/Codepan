@@ -135,52 +135,52 @@ const NewProject = () => {
         )}
       </header>
       <div className="codepen-container">
+      <Split
+        sizes={[70, 30]}
+        minSize={100}
+        expandToMin={false}
+        gutterSize={10}
+        gutterAlign="center"
+        snapOffset={30}
+        dragInterval={1}
+        direction="vertical"
+        cursor="row-resize"
+        className="split-vertical"
+      >
         <Split
-          sizes={[70, 30]}
+          sizes={[33, 33, 33]}
           minSize={100}
           expandToMin={false}
           gutterSize={10}
           gutterAlign="center"
           snapOffset={30}
           dragInterval={1}
-          direction="vertical"
-          cursor="row-resize"
-          className="split-vertical"
+          direction="horizontal"
+          cursor="col-resize"
+          className="split-horizontal"
         >
-          <Split
-            sizes={[33, 33, 33]}
-            minSize={100}
-            expandToMin={false}
-            gutterSize={10}
-            gutterAlign="center"
-            snapOffset={30}
-            dragInterval={1}
-            direction="horizontal"
-            cursor="col-resize"
-            className="split-horizontal"
-          >
-            <div className="editor-pane">
-              <HtmlEditor value={html} onChange={(value) => handleChange(value, 'html')} />
-            </div>
-            <div className="editor-pane">
-              <CssEditor value={css} onChange={(value) => handleChange(value, 'css')} />
-            </div>
-            <div className="editor-pane">
-              <JsEditor value={js} onChange={(value) => handleChange(value, 'js')} />
-            </div>
-          </Split>
-          <div className="output-pane">
-            <iframe
-              srcDoc={srcDoc}
-              title="output"
-              sandbox="allow-scripts"
-              frameBorder="0"
-              width="100%"
-              height="100%"
-            />
+          <div className="editor-pane">
+            <HtmlEditor value={html} onChange={handleChange} />
+          </div>
+          <div className="editor-pane">
+            <CssEditor value={css} onChange={handleChange} />
+          </div>
+          <div className="editor-pane">
+            <JsEditor value={js} onChange={handleChange} />
           </div>
         </Split>
-      </div>
+        <div className="output-pane">
+          <iframe
+            srcDoc={srcDoc}
+            title="output"
+            sandbox="allow-scripts"
+            frameBorder="0"
+            width="100%"
+            height="100%"
+          />
+        </div>
+      </Split>
+    </div>
     </div>
   );
 };

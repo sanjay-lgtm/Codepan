@@ -8,6 +8,7 @@ import { Home, NewProject } from './container';
 import { Spinner } from './component';
 import './App.css';
 import { setProjects } from './context/actions/projectactions'; // Ensure the correct import path
+import CodePen from './container/Codepan';
 
 function App() {
   const navigate = useNavigate();
@@ -50,7 +51,7 @@ function App() {
 
   return (
     <>
-    {/* <NewProject/> */}
+  
       {isLoading ? (
         <div className='w-screen h-screen flex items-center justify-center overflow-hidden'>
           <Spinner />

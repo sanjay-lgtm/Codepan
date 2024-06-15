@@ -27,7 +27,7 @@ const Home = () => {
                     <Link to="/home">
                         <img src={Logo} alt='logo' className='object-contain w-72 h-auto' />
                     </Link>
-                    <Link to="/newProject">
+                    <Link to="/home/newProject">
                         <div className='px-6 py-3 flex items-center justify-center rounded-xl border border-gray-400 cursor-pointer group-hover:border-gray-200'>
                             <p className='text-gray-400 group-hover:text-gray-200 capitalize'>Start Coding</p>
                         </div>
