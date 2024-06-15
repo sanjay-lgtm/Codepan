@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { motion } from 'framer-motion';
+import PropTypes from 'prop-types';
 
 const UserAuthInput = ({ label, placeHolder, isPass, setStateFunction, Icon, setGetEmailValidationState }) => {
     const [value, setValue] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [isEmailValid, setIsEmailValid] = useState(true);
+
+    const emailRegex = useMemo(() => /.+@[^@]+\.[^@]{2,}$/, []);
 
     const handleInputChange = (e) => {
         const newValue = e.target.value;
@@ -13,7 +16,6 @@ const UserAuthInput = ({ label, placeHolder, isPass, setStateFunction, Icon, set
         setStateFunction(newValue);
 
         if (placeHolder === "Email") {
-            const emailRegex = /.+@[^@]+\.[^@]{2,}$/;
             const status = emailRegex.test(newValue);
             setIsEmailValid(status);
             setGetEmailValidationState(status);
@@ -32,6 +34,7 @@ const UserAuthInput = ({ label, placeHolder, isPass, setStateFunction, Icon, set
                 <input
                     type={isPass && !showPassword ? "password" : "text"}
                     placeholder={placeHolder}
+                    aria-label={placeHolder}
                     className='flex-1 w-full h-full outline-none border-none bg-transparent text-text555 text-lg'
                     value={value}
                     onChange={handleInputChange}
@@ -48,6 +51,20 @@ const UserAuthInput = ({ label, placeHolder, isPass, setStateFunction, Icon, set
             </div>
         </div>
     );
+};
+
+UserAuthInput.propTypes = {
+    label: PropTypes.string.isRequired,
+    placeHolder: PropTypes.string.isRequired,
+    isPass: PropTypes.bool,
+    setStateFunction: PropTypes.func.isRequired,
+    Icon: PropTypes.elementType.isRequired,
+    setGetEmailValidationState: PropTypes.func,
+};
+
+UserAuthInput.defaultProps = {
+    isPass: false,
+    setGetEmailValidationState: () => {},
 };
 
 export default UserAuthInput;

@@ -1,32 +1,31 @@
 .codepen-container {
-	width: 100vw;
-	height: calc(100vh - 64px); /* Adjust height considering header height */
-	display: flex;
-	flex-direction: column;
-	overflow: hidden;
-  }
-  
-  .split-vertical {
-	display: flex;
-	flex-direction: column;
-	height: 100%;
-  }
-  
-  .split-horizontal {
-	display: flex;
-	height: 100%;
-  }
-  
-  .editor-pane {
-	display: flex;
-	flex-direction: column;
-	padding: 10px;
-	border: 1px solid #ddd;
-	overflow: auto;
-  }
-  
-  .output-pane {
-	height: 100%;
-	border-top: 1px solid #ddd;
-  }
-  
+  width: 100vw;
+  height: calc(100vh - 64px); /* Adjust height considering header height */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.split-vertical {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.split-horizontal {
+  display: flex;
+  height: 100%;
+}
+
+.editor-pane {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border: 1px solid #ddd;
+  overflow: auto;
+}
+
+.output-pane {
+  height: 100%;
+  border-top: 1px solid #ddd;
+}

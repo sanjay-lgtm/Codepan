@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setUser, setUserNull } from './context/actions/useractions';
-import { setProjects } from './context/actions/projectactions';
 import { auth, db } from './config/firebase.config';
 import { collection, doc, onSnapshot, orderBy, query, setDoc } from 'firebase/firestore';
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import { Home, NewProject } from './container';
 import { Spinner } from './component';
 import './App.css';
+import { setProjects } from './context/actions/projectactions'; // Ensure the correct import path
 
 function App() {
   const navigate = useNavigate();
@@ -43,13 +43,14 @@ function App() {
     );
     const unsubscribe = onSnapshot(projectQuery, (querySnapshot) => {
       const projectList = querySnapshot.docs.map((doc) => doc.data());
-      dispatch(setProjects(projectList));
+      dispatch(setProjects(projectList)); // Use the correct dispatch function
     });
-    return () => unsubscribe();
+    return () => unsubscribe(); // Ensure cleanup
   }, [dispatch]);
 
   return (
     <>
+    {/* <NewProject/> */}
       {isLoading ? (
         <div className='w-screen h-screen flex items-center justify-center overflow-hidden'>
           <Spinner />
