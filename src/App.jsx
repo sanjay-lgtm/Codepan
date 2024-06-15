@@ -51,20 +51,20 @@ function App() {
 
   return (
     <>
-  
-      {isLoading ? (
+
+      { isLoading ? (
         <div className='w-screen h-screen flex items-center justify-center overflow-hidden'>
           <Spinner />
         </div>
       ) : (
         <div className='w-screen h-screen flex items-start justify-start overflow-hidden'>
           <Routes>
-            <Route path='/home/*' element={<Home />} />
-            <Route path='/home/newProject' element={<NewProject />} />
-            <Route path='*' element={<Navigate to="/home" />} />
+            <Route path='/home/*' element={ <Home /> } />
+            <Route path='/home/newProject' element={ <NewProject /> } />
+            <Route path='*' element={ <Navigate to="/home" /> } />
           </Routes>
         </div>
-      )}
+      ) }
     </>
   );
 }
