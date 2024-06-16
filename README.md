@@ -89,13 +89,13 @@ For animations and transitions.
 
 
 
-https://codepan-iota.vercel.app/home/auth
+[https://codepan-iota.vercel.app/home/auth](https://codepan-iota.vercel.app/home/auth)
 ## Deployment
 
 To deploy this project run
 
 ```bash
-  https://codepan-iota.vercel.app/home/auth
+  [https://codepan-iota.vercel.app/home/auth](https://codepan-iota.vercel.app/home/auth)
 ```
 
 
