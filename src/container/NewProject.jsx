@@ -11,6 +11,7 @@ import CssEditor from '../Editor/CssEditor';
 import HtmlEditor from '../Editor/HtmlEditor';
 import { UserProfileDetails } from '../component';
 import Alert from '../component/Alert';
+import { Link } from 'react-router-dom';
 
 const NewProject = () => {
   const [html, setHtml] = useState('');
@@ -69,118 +70,120 @@ const NewProject = () => {
   return (
     <div>
       <AnimatePresence>
-        {alert && <Alert status={"Success"} alertMsg={alertMsg} />}
+        { alert && <Alert status={ "Success" } alertMsg={ alertMsg } /> }
       </AnimatePresence>
       <header className='w-full flex items-center justify-between px-8 md:px-32 py-4'>
         <div className='flex items-center gap-2'>
-          <img className='w-32 h-auto object-contain' src={Logo} alt='Logo' />
+          <Link to={ "/home" }>
+            <img className='w-32 h-auto object-contain' src={ Logo } alt='Logo' />
+          </Link>
           <div className='flex flex-col items-start'>
             <div className='flex items-center gap-3'>
               <AnimatePresence>
-                {isTitleEdit ? (
+                { isTitleEdit ? (
                   <motion.input
                     key="TitleInput"
                     className='px-3 py-2 rounded-md bg-transparent text-primaryText text-base outline-none border-none'
                     type='text'
                     placeholder='Your Title'
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
+                    value={ title }
+                    onChange={ (e) => setTitle(e.target.value) }
                   />
                 ) : (
                   <motion.p
                     key="titleLabel"
                     className='px-3 py-2 text-white text-lg'
                   >
-                    {title}
+                    { title }
                   </motion.p>
-                )}
+                ) }
               </AnimatePresence>
               <AnimatePresence>
-                {isTitleEdit ? (
+                { isTitleEdit ? (
                   <motion.div
                     key="MdCheck"
-                    whileTap={{ scale: 0.9 }}
+                    whileTap={ { scale: 0.9 } }
                     className='cursor-pointer'
-                    onClick={() => setIsTitleEdit(false)}
+                    onClick={ () => setIsTitleEdit(false) }
                   >
                     <MdCheck className='text-2xl text-emerald-500' />
                   </motion.div>
                 ) : (
                   <motion.div
                     key="MdEdit"
-                    whileTap={{ scale: 0.9 }}
+                    whileTap={ { scale: 0.9 } }
                     className='cursor-pointer'
-                    onClick={() => setIsTitleEdit(true)}
+                    onClick={ () => setIsTitleEdit(true) }
                   >
                     <MdEdit className='text-2xl text-primaryText' />
                   </motion.div>
-                )}
+                ) }
               </AnimatePresence>
             </div>
             <div className='flex items-center gap-2 px-3 -mt-2'>
               <p className='text-primaryText text-sm'>
-                {user?.displayName || user?.email.split("@")[0]}
+                { user?.displayName || user?.email.split("@")[0] }
               </p>
-              <motion.p whileTap={{ scale: 0.9 }} className='text-[10px] bg-emerald-500 rounded-sm px-2 py-[1px] text-primary font-semibold cursor-pointer '>
+              <motion.p whileTap={ { scale: 0.9 } } className='text-[10px] bg-emerald-500 rounded-sm px-2 py-[1px] text-primary font-semibold cursor-pointer '>
                 +Follow
               </motion.p>
             </div>
           </div>
         </div>
-        {user && (
+        { user && (
           <div className='flex items-center gap-4'>
-            <motion.button whileTap={{ scale: 0.9 }} onClick={saveProgram} className='px-6 py-4 bg-primaryText cursor-pointer text-base text-primary font-semibold rounded-md'>Save</motion.button>
+            <motion.button whileTap={ { scale: 0.9 } } onClick={ saveProgram } className='px-6 py-4 bg-primaryText cursor-pointer text-base text-primary font-semibold rounded-md'>Save</motion.button>
             <UserProfileDetails />
           </div>
-        )}
+        ) }
       </header>
       <div className="codepen-container">
-      <Split
-        sizes={[70, 30]}
-        minSize={100}
-        expandToMin={false}
-        gutterSize={10}
-        gutterAlign="center"
-        snapOffset={30}
-        dragInterval={1}
-        direction="vertical"
-        cursor="row-resize"
-        className="split-vertical"
-      >
         <Split
-          sizes={[33, 33, 33]}
-          minSize={100}
-          expandToMin={false}
-          gutterSize={10}
+          sizes={ [70, 30] }
+          minSize={ 100 }
+          expandToMin={ false }
+          gutterSize={ 10 }
           gutterAlign="center"
-          snapOffset={30}
-          dragInterval={1}
-          direction="horizontal"
-          cursor="col-resize"
-          className="split-horizontal"
+          snapOffset={ 30 }
+          dragInterval={ 1 }
+          direction="vertical"
+          cursor="row-resize"
+          className="split-vertical"
         >
-          <div className="editor-pane">
-            <HtmlEditor value={html} onChange={handleChange} />
-          </div>
-          <div className="editor-pane">
-            <CssEditor value={css} onChange={handleChange} />
-          </div>
-          <div className="editor-pane">
-            <JsEditor value={js} onChange={handleChange} />
+          <Split
+            sizes={ [33, 33, 33] }
+            minSize={ 100 }
+            expandToMin={ false }
+            gutterSize={ 10 }
+            gutterAlign="center"
+            snapOffset={ 30 }
+            dragInterval={ 1 }
+            direction="horizontal"
+            cursor="col-resize"
+            className="split-horizontal"
+          >
+            <div className="editor-pane">
+              <HtmlEditor value={ html } onChange={ handleChange } />
+            </div>
+            <div className="editor-pane">
+              <CssEditor value={ css } onChange={ handleChange } />
+            </div>
+            <div className="editor-pane">
+              <JsEditor value={ js } onChange={ handleChange } />
+            </div>
+          </Split>
+          <div className="output-pane">
+            <iframe
+              srcDoc={ srcDoc }
+              title="output"
+              sandbox="allow-scripts"
+              frameBorder="0"
+              width="100%"
+              height="100%"
+            />
           </div>
         </Split>
-        <div className="output-pane">
-          <iframe
-            srcDoc={srcDoc}
-            title="output"
-            sandbox="allow-scripts"
-            frameBorder="0"
-            width="100%"
-            height="100%"
-          />
-        </div>
-      </Split>
-    </div>
+      </div>
     </div>
   );
 };

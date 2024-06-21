@@ -5,10 +5,12 @@ import { v4 as uuidv4 } from 'uuid';
 const googleProvider = new GoogleAuthProvider()
 const githubProvider = new GithubAuthProvider()
 
-export const signInWithGoogle = async () => {
+export const signInWithGoogle = async (redirect) => {
     try {
         await signInWithRedirect(auth, googleProvider).then(userCred => {
-            window.location.reload()
+            // window.location.reload()
+            redirect();
+            
         })
     } catch (error) {
         console.error('Error during Google sign-in:', error);
@@ -16,10 +18,11 @@ export const signInWithGoogle = async () => {
 
 }
 
-export const signInWithGitHub = async () => {
+export const signInWithGitHub = async (redirect) => {
     try {
         await signInWithRedirect(auth, githubProvider).then(userCred => {
-            window.location.reload()
+            // window.location.reload()
+            redirect();
         })
     } catch (error) {
         console.error('Error during GitHub sign-in:', error);

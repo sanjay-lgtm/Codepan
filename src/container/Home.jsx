@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { HiChevronDoubleLeft } from "react-icons/hi";
 import { motion } from 'framer-motion';
-import { Link, Route, Routes } from 'react-router-dom';
+import { Link, Route, Routes, useNavigate } from 'react-router-dom';
 import Logo from '../assets/Logo.webp';
 import { MdHome } from "react-icons/md";
 import { FaSearch } from "react-icons/fa";
@@ -13,8 +13,11 @@ import { setSearch } from '../context/actions/searchactions';
 const Home = () => {
     const [isSideMenu, setSideMenu] = useState(false);
     const user = useSelector(state => state.user?.user);
+    console.log(user,"hi user");
     const searchTerm = useSelector((state) => state.searchTerm?.searchTerm || "");
     const dispatch = useDispatch();
+
+
 
     return (
         <>
@@ -27,17 +30,19 @@ const Home = () => {
                     <Link to="/home">
                         <img src={Logo} alt='logo' className='object-contain w-72 h-auto' />
                     </Link>
+
                     <Link to="/home/newProject">
-                        <div className='px-6 py-3 flex items-center justify-center rounded-xl border border-gray-400 cursor-pointer group-hover:border-gray-200'>
+                        <div className='px-6 py-3 flex items-center justify-center rounded-xl border border-gray-400 cursor-pointer group-hover:border-gray-200' >
                             <p className='text-gray-400 group-hover:text-gray-200 capitalize'>Start Coding</p>
                         </div>
                     </Link>
-                    {user && (
-                        <Link to="/home/projects" className='flex items-center justify-center gap-6'>
+
+                     {user && ( 
+                         <Link to="/home/projects" className='flex items-center justify-center gap-6'>
                             <MdHome className='text-primaryText text-xl' />
                             <p className='text-lg text-primaryText'>Home</p>
-                        </Link>
-                    )}
+                        </Link> 
+                      )}  
                 </div>
             </div>
 
@@ -68,6 +73,7 @@ const Home = () => {
                         <Route path='/*' element={<Project />} />
                         <Route path='/auth' element={<SignUp />} />
                     </Routes>
+                    
                 </div>
             </div>
         </>

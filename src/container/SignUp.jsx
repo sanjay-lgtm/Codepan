@@ -9,6 +9,7 @@ import { auth } from '../config/firebase.config';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import UserAuthInput from '../component/UserAuthInput';
 import { fadeInOut } from '../animations';
+import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -18,6 +19,7 @@ const SignUp = () => {
   const [alert, setAlert] = useState(false);
   const [alertMsg, setAlertMsg] = useState("");
 
+  const navigate = useNavigate();
   const validatePassword = (password) => {
     const minLength = 8;
     const hasNumber = /\d/;
@@ -132,7 +134,7 @@ const SignUp = () => {
 
           {/* Google Sign-in */}
           <motion.div
-            onClick={signInWithGoogle}
+            onClick={()=>signInWithGoogle(navigate("home",{replace:true}))}
             className='flex items-center justify-center gap-3 bg-[rgba(256,256,256,0.2)] backdrop-blur-md w-full py-1 rounded-xl hover:bg-[rgba(256,256,256,0.4)] cursor-pointer'
             whileTap={{ scale: 0.9 }}
           >
@@ -149,7 +151,7 @@ const SignUp = () => {
 
           {/* GitHub Sign-in */}
           <motion.div
-            onClick={signInWithGitHub}
+            onClick={()=>signInWithGitHub(navigate("home",{replace:true}))}
             className='flex items-center justify-center gap-3 bg-[rgba(256,256,256,0.2)] backdrop-blur-md w-full py-1 rounded-xl hover:bg-[rgba(256,256,256,0.4)] cursor-pointer'
             whileTap={{ scale: 0.9 }}
           >

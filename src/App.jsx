@@ -4,7 +4,7 @@ import { setUser, setUserNull } from './context/actions/useractions';
 import { auth, db } from './config/firebase.config';
 import { collection, doc, onSnapshot, orderBy, query, setDoc } from 'firebase/firestore';
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
-import { Home, NewProject } from './container';
+import { Home, NewProject, Project, SignUp } from './container';
 import { Spinner } from './component';
 import './App.css';
 import { setProjects } from './context/actions/projectactions'; // Ensure the correct import path
@@ -23,7 +23,7 @@ function App() {
         try {
           await setDoc(doc(db, "users", userCred?.uid), userCred?.providerData[0]);
           dispatch(setUser(userCred?.providerData[0]));
-          navigate("/home/projects", { replace: true });
+          // navigate("/home/projects", { replace: true });
         } catch (error) {
           console.error("Error setting user document: ", error);
         }
@@ -44,27 +44,31 @@ function App() {
     );
     const unsubscribe = onSnapshot(projectQuery, (querySnapshot) => {
       const projectList = querySnapshot.docs.map((doc) => doc.data());
-      dispatch(setProjects(projectList)); // Use the correct dispatch function
+      dispatch(setProjects(projectList)); 
     });
-    return () => unsubscribe(); // Ensure cleanup
+    return () => unsubscribe(); 
   }, [dispatch]);
 
   return (
     <>
-
-      { isLoading ? (
+  {/* <NewProject/> */}
+  {/* <Home/> */}
+  {/* <Project/>  */}
+       { isLoading ? (
         <div className='w-screen h-screen flex items-center justify-center overflow-hidden'>
           <Spinner />
         </div>
-      ) : (
+       ) : ( 
         <div className='w-screen h-screen flex items-start justify-start overflow-hidden'>
           <Routes>
-            <Route path='/home/*' element={ <Home /> } />
+            <Route path='/home' element={ <Home /> } />
             <Route path='/home/newProject' element={ <NewProject /> } />
+            {/* <Route path='/home/projects' element={<Project/>}/> */}
+            <Route path='/home/auth' element={<SignUp/>}/>
             <Route path='*' element={ <Navigate to="/home" /> } />
           </Routes>
         </div>
-      ) }
+    ) }
     </>
   );
 }
