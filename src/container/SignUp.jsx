@@ -37,7 +37,7 @@ const SignUp = () => {
     return null;
   };
 
-  const handleAuthAction = async () => {
+  const handleAuthAction = async (redirect) => {
     setAlert(false); // Clear previous alerts
     const passwordError = validatePassword(password);
     if (!getEmailValidationState) {
@@ -55,6 +55,7 @@ const SignUp = () => {
           const userCred = await createUserWithEmailAndPassword(auth, email, password);
           console.log(userCred);
         }
+        redirect()
       } catch (error) {
         setAlertMsg(error.message);
         setAlert(true);
@@ -103,7 +104,7 @@ const SignUp = () => {
 
           {/* Auth Button */}
           <motion.div
-            onClick={handleAuthAction}
+            onClick={()=>handleAuthAction(navigate("home",{replace:true}))}
             whileTap={{ scale: 0.9 }}
             className='flex items-center justify-center w-full py-3 rounded-md bg-emerald-500 text-white cursor-pointer hover:bg-emerald-700'
           >
